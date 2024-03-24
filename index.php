@@ -4,6 +4,9 @@
 define("URL", str_replace("index.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") .
     "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 
+require_once "controllers/front/API.controller.php";
+$apiController = new ApiController();
+
 try {
     // Vérifie si le paramètre 'page' est présent dans l'URL. S'il est absent ou vide, une exception est lancée.
     if (empty($_GET['page'])) {
@@ -22,19 +25,22 @@ try {
                 switch ($url[1]) {
                     case "animaux":
                         // Affiche les données JSON pour tous les animaux.
-                        echo "données JSON des animaux demandées";
+                        $apiController->getAnimaux();
                         break;
                     case "animal":
                         // Affiche les données JSON pour un animal spécifique, identifié par $url[2].
-                        echo "données JSON de l'animal " . $url[2] . " demandées";
+                        if (empty($url[2])) {
+                            throw new Exception("L'identifiant de l'animal est manquant");
+                        }
+                        $apiController->getAnimal($url[2]);
                         break;
                     case "continents":
                         // Affiche les données JSON pour les continents.
-                        echo "données JSON des continents demandées";
+                        $apiController->getContinents();
                         break;
                     case "familles":
                         // Affiche les données JSON pour les familles d'animaux.
-                        echo "données JSON des familles demandées";
+                        $apiController->getFamilles();
                         break;
                     default:
                         // Si aucune route valide n'est trouvée, une exception est lancée.
