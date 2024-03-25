@@ -1,11 +1,15 @@
 <?php
+session_start();
+
 // Définition de l'URL de base de l'application. Remplace "index.php" dans l'URL par une chaîne vide pour obtenir l'URL racine.
 // Utilise HTTPS si disponible, sinon HTTP.
 define("URL", str_replace("index.php", "", (isset($_SERVER['HTTPS']) ? "https" : "http") .
     "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 
 require_once "controllers/front/API.controller.php";
+require_once "controllers/back/admin.controller.php";
 $apiController = new ApiController();
+$adminController = new AdminController();
 
 try {
     // Vérifie si le paramètre 'page' est présent dans l'URL. S'il est absent ou vide, une exception est lancée.
@@ -25,7 +29,11 @@ try {
                 switch ($url[1]) {
                     case "animaux":
                         // Affiche les données JSON pour tous les animaux.
-                        $apiController->getAnimaux();
+                        if (!isset($url[2]) || !isset($url[3])) {
+                            $apiController->getAnimaux(-1, -1);
+                        } else {
+                            $apiController->getAnimaux((int)$url[2], (int)$url[3]);
+                        }
                         break;
                     case "animal":
                         // Affiche les données JSON pour un animal spécifique, identifié par $url[2].
@@ -42,6 +50,9 @@ try {
                         // Affiche les données JSON pour les familles d'animaux.
                         $apiController->getFamilles();
                         break;
+                    case "sendMessage":
+                        $apiController->sendMessage();
+                        break;
                     default:
                         // Si aucune route valide n'est trouvée, une exception est lancée.
                         throw new Exception("La page n'existe pas");
@@ -49,7 +60,22 @@ try {
                 break;
             case "back":
                 // Routeur backend : gère les demandes pour l'administration ou les processus backend.
-                echo "page back end demandée";
+                switch ($url[1]) {
+                    case "login":
+                        $adminController->getPageLogin();
+                        break;
+                    case "connexion":
+                        $adminController->connexion();
+                        break;
+                    case "admin":
+                        $adminController->getAccueilAdmin();
+                        break;
+                    case "deconnexion":
+                        $adminController->deconnexion();
+                        break;
+                    default:
+                        throw new Exception("La page n'existe pas");
+                }
                 break;
             default:
                 // Si le premier segment de l'URL ne correspond à aucune catégorie connue, une exception est lancée.
