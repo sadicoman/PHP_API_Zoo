@@ -1,6 +1,7 @@
 <?php
 
 require_once "models/front/API.manager.php";
+require_once "models/Model.php";
 
 class APIController
 {
@@ -15,35 +16,54 @@ class APIController
     {
         $animaux = $this->apiManager->getDBAnimaux();
 
-        // header('Content-Type: application/json'); // Indique que la réponse est au format JSON
-        // echo json_encode($animaux); // Encode les données en JSON et les envoie
-
-        echo "<pre>";
-        print_r($animaux);
-        echo "</pre>";
+        Model::sendJSON($this->formatDataLignesAnimaux($animaux));
     }
 
     public function getAnimal($idAnimal)
     {
         $lignesAnimal = $this->apiManager->getDBAnimal($idAnimal);
-        echo "<pre>";
-        print_r($lignesAnimal);
-        echo "</pre>";
+
+        Model::sendJSON($this->formatDataLignesAnimaux($lignesAnimal));
+    }
+
+    private function formatDataLignesAnimaux($lignes)
+    {
+        $formattedData = [];
+        foreach ($lignes as $ligne) {
+            if (!array_key_exists($ligne['animal_id'], $formattedData)) {
+                $formattedData[$ligne['animal_id']] = [
+                    'id' => $ligne['animal_id'],
+                    'nom' => $ligne['animal_nom'],
+                    'description' => $ligne['animal_description'],
+                    'image' => $ligne['animal_image'],
+                    'famille' => [
+                        'idFamille' => $ligne['famille_id'],
+                        'libelle' => $ligne['famille_libelle'],
+                        'descriptionFamille' => $ligne['famille_description'],
+                    ],
+                ];
+            }
+            // Exemple de reformattage des données
+
+            $formattedData[$ligne['animal_id']]['continents'][] = [
+                'idContinent' => $ligne['continent_id'],
+                'libelleContinent' => $ligne['continent_libelle'],
+            ];
+        }
+        return $formattedData;
     }
 
     public function getContinents()
     {
         $continents = $this->apiManager->getDBContinents();
-        echo "<pre>";
-        print_r($continents);
-        echo "</pre>";
+
+        Model::sendJSON($continents);
     }
 
     public function getFamilles()
     {
         $familles = $this->apiManager->getDBFamilles();
-        echo "<pre>";
-        print_r($familles);
-        echo "</pre>";
+
+        Model::sendJSON($familles);
     }
 }

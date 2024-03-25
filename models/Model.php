@@ -11,4 +11,10 @@ abstract class Model
 
         return $pdo;
     }
+
+    public static function sendJSON($info)
+    {
+        header('Content-Type: application/json');
+        echo json_encode($info);
+    }
 }
