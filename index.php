@@ -8,8 +8,10 @@ define("URL", str_replace("index.php", "", (isset($_SERVER['HTTPS']) ? "https" :
 
 require_once "controllers/front/API.controller.php";
 require_once "controllers/back/admin.controller.php";
+require_once "controllers/back/familles.controller.php";
 $apiController = new ApiController();
 $adminController = new AdminController();
+$famillesController = new FamillesController();
 
 try {
     // Vérifie si le paramètre 'page' est présent dans l'URL. S'il est absent ou vide, une exception est lancée.
@@ -73,6 +75,18 @@ try {
                     case "deconnexion":
                         $adminController->deconnexion();
                         break;
+                    case "familles":
+                        switch ($url[2]) {
+                            case "visualisation":
+                                $famillesController->visualisation();
+                                break;
+                            case "creation":
+                                echo "creation";
+                                break;
+                            default:
+                                throw new Exception("La page n'existe pas");
+                        }
+                        break;
                     default:
                         throw new Exception("La page n'existe pas");
                 }
@@ -86,4 +100,5 @@ try {
     // Capture et affiche le message d'erreur si une exception est lancée à n'importe quel point.
     $msg = $e->getMessage();
     echo $msg;
+    echo "<a href='" . URL . "back/login'>login</a>";
 }
