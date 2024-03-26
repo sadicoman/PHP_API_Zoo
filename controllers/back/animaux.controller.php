@@ -22,29 +22,23 @@ class AnimauxController
         }
     }
 
-    // public function suppression()
-    // {
-    //     if (Securite::verifAccessSession()) {
+    public function suppression()
+    {
+        if (Securite::verifAccessSession()) {
 
-    //         $idFamille = (int)Securite::secureHTML($_POST['famille_id']);
+            $idAnimal = (int)Securite::secureHTML($_POST['animal_id']);
 
-    //         if ($this->famillesManager->compterAnimaux($idFamille) > 0) {
-    //             $_SESSION['alert'] = [
-    //                 "message" => "La famille n'a pas été supprimé",
-    //                 "type" => "alert-danger"
-    //             ];
-    //         } else {
-    //             $this->famillesManager->delateDBfamille($idFamille);
-    //             $_SESSION['alert'] = [
-    //                 "message" => "La famille est supprimée",
-    //                 "type" => "alert-success"
-    //             ];
-    //         }
-    //         header('Location:' . URL . 'back/familles/visualisation');
-    //     } else {
-    //         throw new Exception("Vous n'avez pas le droit d'être la ! ");
-    //     }
-    // }
+            $this->animauxManager->delateDBAnimalContinent($idAnimal);
+            $this->animauxManager->delateDBAnimal($idAnimal);
+            $_SESSION['alert'] = [
+                "message" => "L'animal est supprimée",
+                "type" => "alert-success"
+            ];
+            header('Location:' . URL . 'back/animaux/visualisation');
+        } else {
+            throw new Exception("Vous n'avez pas le droit d'être la ! ");
+        }
+    }
 
     // public function modification()
     // {

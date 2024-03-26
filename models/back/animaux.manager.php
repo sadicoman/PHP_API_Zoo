@@ -15,4 +15,28 @@ class AnimauxManager extends Model
 
         return $animaux;
     }
+
+    public function delateDBAnimalContinent($idAnimal)
+    {
+        $bdd = $this->getBdd();
+        $req = $bdd->prepare("DELETE FROM animal_continent WHERE animal_id= :idAnimal");
+
+        $req->bindValue(':idAnimal', $idAnimal, PDO::PARAM_INT);
+
+        $req->execute();
+
+        $req->closeCursor();
+    }
+
+    public function delateDBanimal($idAnimal)
+    {
+        $bdd = $this->getBdd();
+        $req = $bdd->prepare("DELETE FROM animal WHERE animal_id= :idAnimal");
+
+        $req->bindValue(':idAnimal', $idAnimal, PDO::PARAM_INT);
+
+        $req->execute();
+
+        $req->closeCursor();
+    }
 }

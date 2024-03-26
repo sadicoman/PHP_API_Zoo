@@ -103,9 +103,9 @@ try {
                             case "visualisation":
                                 $animauxController->visualisation();
                                 break;
-                                // case "validationsSupression":
-                                //     $animauxController->suppression();
-                                //     break;
+                            case "validationSuppression":
+                                $animauxController->suppression();
+                                break;
                                 // case "validationModification":
                                 //     $animauxController->modification();
                                 //     break;

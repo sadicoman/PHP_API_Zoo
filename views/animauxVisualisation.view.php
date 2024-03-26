@@ -5,6 +5,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Animal</th>
+            <!-- <th scope="col">Images</th> -->
             <th scope="col">Description</th>
             <th scope="col" colspan="2">actions</th>
         </tr>
@@ -15,6 +16,7 @@
             <tr>
                 <td><?= $animal['animal_id'] ?></td>
                 <td><?= $animal['animal_nom'] ?></td>
+                <!-- <td><img class="img-fluid" style="max-width: 50px; height: auto;" src="../../public/images/<?= $animal['animal_image'] ?>" alt="<?= $animal['animal_image'] ?>"></td> -->
                 <td><?= $animal['animal_description'] ?></td>
                 <td>
                     <form method="post" action="">
