@@ -42,4 +42,16 @@ class FamillesManager extends Model
 
         return $resultat['nb'];
     }
+
+    public function updateFamille($idFamille, $libelle, $description)
+    {
+        $bdd = $this->getBdd();
+        $req = $bdd->prepare("Update famille set famille_libelle = :libelle, famille_description = :description where famille_id= :idFamille");
+
+        $req->bindValue(":idFamille", $idFamille, PDO::PARAM_INT);
+        $req->bindValue(":libelle", $libelle, PDO::PARAM_STR);
+        $req->bindValue(":description", $description, PDO::PARAM_STR);
+
+        $req->execute();
+    }
 }

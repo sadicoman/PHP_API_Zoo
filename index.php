@@ -83,6 +83,9 @@ try {
                             case "validationsSupression":
                                 $famillesController->suppression();
                                 break;
+                            case "validationModification":
+                                $famillesController->modification();
+                                break;
                             case "creation":
                                 echo "creation";
                                 break;
