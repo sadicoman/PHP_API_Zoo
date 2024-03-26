@@ -37,6 +37,7 @@ class FamillesManager extends Model
 
         // Exécuter la requête
         $req->execute();
+        $req->closeCursor();
 
         $resultat = $req->fetch(PDO::FETCH_ASSOC);
 
@@ -53,5 +54,20 @@ class FamillesManager extends Model
         $req->bindValue(":description", $description, PDO::PARAM_STR);
 
         $req->execute();
+        $req->closeCursor();
+    }
+
+    public function createFamille($libelle, $description)
+    {
+        $bdd = $this->getBdd();
+        $req = $bdd->prepare("Insert into famille (famille_libelle,famille_description) values (:libelle, :description)");
+
+        $req->bindValue(":libelle", $libelle, PDO::PARAM_STR);
+        $req->bindValue(":description", $description, PDO::PARAM_STR);
+
+        $req->execute();
+        $req->closeCursor();
+
+        return $bdd->lastInsertId();
     }
 }

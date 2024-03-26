@@ -22,10 +22,6 @@ class FamillesController
         }
     }
 
-    public function creation()
-    {
-    }
-
     public function suppression()
     {
         if (Securite::verifAccessSession()) {
@@ -60,6 +56,32 @@ class FamillesController
 
             $_SESSION['alert'] = [
                 "message" => "La famille a bien été modifiée",
+                "type" => "alert-success"
+            ];
+            header('Location:' . URL . 'back/familles/visualisation');
+        } else {
+            throw new Exception("Vous n'avez pas le droit d'être la ! ");
+        }
+    }
+
+    public function creationTemplate()
+    {
+        if (Securite::verifAccessSession()) {
+            require_once "views/famillesCreation.view.php";
+        } else {
+            throw new Exception("Vous n'avez pas le droit d'être la ! ");
+        }
+    }
+
+    public function creationValidation()
+    {
+        if (Securite::verifAccessSession()) {
+            $libelle = Securite::secureHTML($_POST['famille_libelle']);
+            $description = Securite::secureHTML($_POST['famille_description']);
+            $idFamille = $this->famillesManager->createFamille($libelle, $description);
+
+            $_SESSION['alert'] = [
+                "message" => "La famille a bien été créée avec l'identifiant :" . $idFamille,
                 "type" => "alert-success"
             ];
             header('Location:' . URL . 'back/familles/visualisation');

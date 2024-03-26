@@ -87,7 +87,10 @@ try {
                                 $famillesController->modification();
                                 break;
                             case "creation":
-                                echo "creation";
+                                $famillesController->creationTemplate();
+                                break;
+                            case "creationValidation":
+                                $famillesController->creationValidation();
                                 break;
                             default:
                                 throw new Exception("La page n'existe pas");
