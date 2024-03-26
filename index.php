@@ -9,9 +9,11 @@ define("URL", str_replace("index.php", "", (isset($_SERVER['HTTPS']) ? "https" :
 require_once "controllers/front/API.controller.php";
 require_once "controllers/back/admin.controller.php";
 require_once "controllers/back/familles.controller.php";
+require_once "controllers/back/animaux.controller.php";
 $apiController = new ApiController();
 $adminController = new AdminController();
 $famillesController = new FamillesController();
+$animauxController = new AnimauxController();
 
 try {
     // Vérifie si le paramètre 'page' est présent dans l'URL. S'il est absent ou vide, une exception est lancée.
@@ -92,6 +94,27 @@ try {
                             case "creationValidation":
                                 $famillesController->creationValidation();
                                 break;
+                            default:
+                                throw new Exception("La page n'existe pas");
+                        }
+                        break;
+                    case "animaux":
+                        switch ($url[2]) {
+                            case "visualisation":
+                                $animauxController->visualisation();
+                                break;
+                                // case "validationsSupression":
+                                //     $animauxController->suppression();
+                                //     break;
+                                // case "validationModification":
+                                //     $animauxController->modification();
+                                //     break;
+                                // case "creation":
+                                //     $animauxController->creationTemplate();
+                                //     break;
+                                // case "creationValidation":
+                                //     $animauxController->creationValidation();
+                                //     break;
                             default:
                                 throw new Exception("La page n'existe pas");
                         }
