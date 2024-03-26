@@ -15,4 +15,16 @@ class ContinentsManager extends Model
 
         return $animaux;
     }
+
+    public function addContinentAnimal($idAnimal, $idContinent)
+    {
+        $bdd = $this->getBdd();
+        $req = $bdd->prepare("Insert into animal_continent (animal_id, continent_id) values (:idAnimal, :idContinent)");
+
+        $req->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
+        $req->bindValue(":idContinent", $idContinent, PDO::PARAM_INT);
+
+        $req->execute();
+        $req->closeCursor();
+    }
 }

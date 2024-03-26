@@ -39,4 +39,20 @@ class AnimauxManager extends Model
 
         $req->closeCursor();
     }
+
+    public function createAnimal($libelle, $description, $image, $famille)
+    {
+        $bdd = $this->getBdd();
+        $req = $bdd->prepare("Insert into animal (animal_nom,animal_description, animal_image, famille_id) values (:libelle, :description, :image, :famille)");
+
+        $req->bindValue(":libelle", $libelle, PDO::PARAM_STR);
+        $req->bindValue(":description", $description, PDO::PARAM_STR);
+        $req->bindValue(":image", $image, PDO::PARAM_STR);
+        $req->bindValue(":famille", $famille, PDO::PARAM_INT);
+
+        $req->execute();
+        $req->closeCursor();
+
+        return $bdd->lastInsertId();
+    }
 }
