@@ -15,4 +15,16 @@ class FamillesManager extends Model
 
         return $familles;
     }
+
+    public function delateDBfamille($idFamille)
+    {
+        $bdd = $this->getBdd();
+        $req = $bdd->prepare("DELETE FROM famille WHERE famille_id= :idFamille");
+
+        $req->bindValue(':idFamille', $idFamille, PDO::PARAM_INT);
+
+        $req->execute();
+
+        $req->closeCursor();
+    }
 }

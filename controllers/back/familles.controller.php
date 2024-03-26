@@ -25,4 +25,13 @@ class FamillesController
     public function creation()
     {
     }
+
+    public function suppression()
+    {
+        if (Securite::verifAccessSession()) {
+            $this->famillesManager->delateDBfamille((int)Securite::secureHTML($_POST['famille_id']));
+        } else {
+            throw new Exception("Vous n'avez pas le droit d'être la ! ");
+        }
+    }
 }

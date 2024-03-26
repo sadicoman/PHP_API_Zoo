@@ -80,6 +80,9 @@ try {
                             case "visualisation":
                                 $famillesController->visualisation();
                                 break;
+                            case "validationsSupression":
+                                $famillesController->suppression();
+                                break;
                             case "creation":
                                 echo "creation";
                                 break;
