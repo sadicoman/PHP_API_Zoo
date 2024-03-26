@@ -2,6 +2,8 @@
 
 require_once "Securite.class.php";
 require_once "models/back/animaux.manager.php";
+require_once "models/back/familles.manager.php";
+require_once "models/back/continents.manager.php";
 
 class AnimauxController
 {
@@ -40,47 +42,18 @@ class AnimauxController
         }
     }
 
-    // public function modification()
-    // {
-    //     if (Securite::verifAccessSession()) {
-    //         $idFamille = (int)Securite::secureHTML($_POST['famille_id']);
-    //         $libelle = Securite::secureHTML($_POST['famille_libelle']);
-    //         $description = Securite::secureHTML($_POST['famille_description']);
-    //         $this->famillesManager->updateFamille($idFamille, $libelle, $description);
+    public function creation()
+    {
+        if (Securite::verifAccessSession()) {
+            $famillesManager = new famillesManager();
+            $familles = $famillesManager->getFamilles();
 
-    //         $_SESSION['alert'] = [
-    //             "message" => "La famille a bien été modifiée",
-    //             "type" => "alert-success"
-    //         ];
-    //         header('Location:' . URL . 'back/familles/visualisation');
-    //     } else {
-    //         throw new Exception("Vous n'avez pas le droit d'être la ! ");
-    //     }
-    // }
+            $continentsManager = new continentsManager();
+            $continents = $continentsManager->getContinent();
 
-    // public function creationTemplate()
-    // {
-    //     if (Securite::verifAccessSession()) {
-    //         require_once "views/famillesCreation.view.php";
-    //     } else {
-    //         throw new Exception("Vous n'avez pas le droit d'être la ! ");
-    //     }
-    // }
-
-    // public function creationValidation()
-    // {
-    //     if (Securite::verifAccessSession()) {
-    //         $libelle = Securite::secureHTML($_POST['famille_libelle']);
-    //         $description = Securite::secureHTML($_POST['famille_description']);
-    //         $idFamille = $this->famillesManager->createFamille($libelle, $description);
-
-    //         $_SESSION['alert'] = [
-    //             "message" => "La famille a bien été créée avec l'identifiant :" . $idFamille,
-    //             "type" => "alert-success"
-    //         ];
-    //         header('Location:' . URL . 'back/familles/visualisation');
-    //     } else {
-    //         throw new Exception("Vous n'avez pas le droit d'être la ! ");
-    //     }
-    // }
+            require_once "views/animalCreation.view.php";
+        } else {
+            throw new Exception("Vous n'avez pas le droit d'être la ! ");
+        }
+    }
 }

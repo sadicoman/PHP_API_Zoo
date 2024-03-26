@@ -109,9 +109,9 @@ try {
                                 // case "validationModification":
                                 //     $animauxController->modification();
                                 //     break;
-                                // case "creation":
-                                //     $animauxController->creationTemplate();
-                                //     break;
+                            case "creation":
+                                $animauxController->creation();
+                                break;
                                 // case "creationValidation":
                                 //     $animauxController->creationValidation();
                                 //     break;
