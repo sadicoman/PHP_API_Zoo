@@ -19,10 +19,7 @@
                 <!-- <td><img class="img-fluid" style="max-width: 50px; height: auto;" src="../../public/images/<?= $animal['animal_image'] ?>" alt="<?= $animal['animal_image'] ?>"></td> -->
                 <td><?= $animal['animal_description'] ?></td>
                 <td>
-                    <form method="post" action="">
-                        <input type="hidden" name="animal_id" value="<?= $animal['animal_id'] ?>" />
-                        <button class="btn btn-warning" type="submit">Modifier</button>
-                    </form>
+                    <a href="<?= URL ?>back/animaux/modification/<?= $animal['animal_id'] ?>" class="btn btn-warning">Modifier </a>
                 </td>
                 <td>
                     <form method="post" action="<?= URL ?>back/animaux/validationSuppression" onSubmit="return confirm('Voulez-vous vraiment supprimer ?');">

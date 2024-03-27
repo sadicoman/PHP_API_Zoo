@@ -106,14 +106,14 @@ try {
                             case "validationSuppression":
                                 $animauxController->suppression();
                                 break;
-                                // case "validationModification":
-                                //     $animauxController->modification();
-                                //     break;
                             case "creation":
                                 $animauxController->creation();
                                 break;
                             case "creationValidation":
                                 $animauxController->creationValidation();
+                                break;
+                            case "modification":
+                                $animauxController->modification($url[3]);
                                 break;
                             default:
                                 throw new Exception("La page n'existe pas");
