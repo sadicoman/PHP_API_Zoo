@@ -65,6 +65,11 @@ class AnimauxController
             $nom = Securite::secureHTML($_POST['animal_nom']);
             $description = Securite::secureHTML($_POST['animal_description']);
             $image = "";
+            if ($_FILES['image']['size'] > 0) {
+                $repertoire = "public/images/";
+                $image = ajoutImage($_FILES['image'], $repertoire);
+            }
+
             $famille = (int)Securite::secureHTML($_POST['famille_id']);
             $idAnimal = $this->animauxManager->createAnimal($nom, $description, $image, $famille);
 
@@ -124,6 +129,7 @@ class AnimauxController
             $description = Securite::secureHTML($_POST['animal_description']);
             $image = "";
             if ($_FILES['image']['size'] > 0) {
+                unlink("public/images/" . $image);
                 $repertoire = "public/images/";
                 $image = ajoutImage($_FILES['image'], $repertoire);
             }

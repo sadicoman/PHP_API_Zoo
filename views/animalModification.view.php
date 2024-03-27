@@ -12,6 +12,7 @@
     </div>
     <div class="mb-3">
         <label for="image" class="form-label">Image :</label>
+        <img src="<?= URL ?>public/images/<?= $animal['animal_image'] ?>" style="width:20px;" />
         <div class="input-group">
             <input type="file" class="form-control" id="image" name="image">
         </div>
