@@ -1,6 +1,7 @@
 <?php ob_start(); ?>
 
-<form method="POST" action="<?= URL ?>back/animaux/creationValidation" enctype="multipart/form-data">
+<form method="POST" action="<?= URL ?>back/animaux/modificationValidation" enctype="multipart/form-data">
+    <input type="hidden" name="animal_id" value="<?= $animal['animal_id']; ?>" />
     <div class="form-group mb-3">
         <label for="animal_nom">Nom de l'animal :</label>
         <input type="text" class="form-control" id="animal_nom" name="animal_nom" value="<?= $animal['animal_nom'] ?>">
@@ -35,7 +36,7 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <button type="submit" class="btn btn-primary">Créer</button>
+    <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
 
 <?php
