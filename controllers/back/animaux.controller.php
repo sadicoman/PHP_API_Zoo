@@ -29,6 +29,8 @@ class AnimauxController
         if (Securite::verifAccessSession()) {
 
             $idAnimal = (int)Securite::secureHTML($_POST['animal_id']);
+            $image = $this->animauxManager->getImageAnimal($idAnimal);
+            unlink("public/images/" . $image);
 
             $this->animauxManager->delateDBAnimalContinent($idAnimal);
             $this->animauxManager->delateDBAnimal($idAnimal);
