@@ -66,4 +66,26 @@ class APIController
 
         Model::sendJSON($familles);
     }
+
+    public function sendMessage()
+    {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
+        header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
+
+        $obj = json_decode(file_get_contents('php://input'));
+
+        // $to = "francois.szczt@hotmail.fr";
+        // $subject = "Message du site MyZoo de : ".$obj->nom;
+        // $message = $obj->contenu;
+        // $headers = "From : ".$obj->email;
+        // mail($to, $subject, $message, $headers);
+
+        $messageRetour = [
+            'from' => $obj->email,
+            'to' => "francois.szczt@hotmail.fr"
+        ];
+
+        echo json_encode($messageRetour);
+    }
 }
